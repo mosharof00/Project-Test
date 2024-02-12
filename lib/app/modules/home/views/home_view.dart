@@ -8,8 +8,15 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    // final List<String> classes = ['class-1', 'class-2', 'class-3'];
-    // String dropdownValue = "class1";
+    HomeController homeController = Get.put(HomeController());
+    final List dropDownList = [
+      'class-1',
+      'class-2',
+      'class-3',
+      'class-4',
+      'class-5',
+      'class-6'
+    ];
     return Scaffold(
         appBar: AppBar(
           title: const Text('HomeView'),
@@ -36,24 +43,71 @@ class HomeView extends GetView<HomeController> {
                         style: TextStyle(fontSize: 16),
                       ),
                       SizedBox(height: 5),
-                      DropdownMenu(
-                          onSelected: (color) {
-                            if (color != null) {}
-                          },
-                          width: 440,
-                          hintText: 'Select Exam',
-                          dropdownMenuEntries: const <DropdownMenuEntry<Color>>[
-                            DropdownMenuEntry(
-                                value: Colors.black, label: 'Black'),
-                            DropdownMenuEntry(
-                                value: Colors.blue, label: 'Blue'),
-                            DropdownMenuEntry(value: Colors.red, label: 'Red'),
-                            DropdownMenuEntry(
-                                value: Colors.green, label: 'Green')
-                          ]),
+                      SizedBox(
+                        height: 50,
+                        width: MediaQuery.sizeOf(context).width,
+                        child: DropdownMenu(
+                            onSelected: (color) {
+                              if (color != null) {}
+                            },
+                            width: 440,
+                            hintText: 'Select Exam',
+                            dropdownMenuEntries: const <DropdownMenuEntry<
+                                Color>>[
+                              DropdownMenuEntry(
+                                  value: Colors.black, label: 'Black'),
+                              DropdownMenuEntry(
+                                  value: Colors.blue, label: 'Blue'),
+                              DropdownMenuEntry(
+                                  value: Colors.red, label: 'Red'),
+                              DropdownMenuEntry(
+                                  value: Colors.green, label: 'Green')
+                            ]),
+                      ),
                     ],
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Obx(() => SizedBox(
+                    height: 50,
+                    child: DropdownButton(
+                      hint: const Text('Select Class'),
+                      // underline: SizedBox(),
+                      isExpanded: true,
+                      value: homeController.selectedItem.value == ""
+                          ? null
+                          : homeController.selectedItem.value,
+                      onChanged: (newValue) {
+                        homeController.upDateSelectedItem(newValue.toString());
+                      },
+                      items: dropDownList.map((e) {
+                        return DropdownMenuItem(
+                            value: e.toString(), child: Text(e.toString()));
+                      }).toList(),
+                    ),
+                  )),
+              // Obx(() => SizedBox(
+              //       height: 20,
+              //       width: MediaQuery.sizeOf(context).width,
+              //       child: DropdownButton<String>(
+              //           isExpanded: true,
+              //           value: homeController.selectedItem.value,
+              //           onChanged: (newValue) {
+              //             homeController
+              //                 .upDateSelectedItem(newValue.toString());
+              //           },
+              //           items: dropDownList
+              //               .map<DropdownMenuItem<String>>((String value) {
+              //             return DropdownMenuItem<String>(
+              //                 value: value, child: Text(value));
+              //           }).toList()),
+              //     )),
+
+              SizedBox(
+                height: 40,
               ),
               Expanded(
                 child: ListView.builder(

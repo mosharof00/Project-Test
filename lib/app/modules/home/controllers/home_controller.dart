@@ -4,6 +4,11 @@ class HomeController extends GetxController {
   //TODO: Implement HomeController
 
   final count = 0.obs;
+  final selectedItem = "".obs;
+  void upDateSelectedItem(String value) {
+    selectedItem.value = value;
+  }
+
   @override
   void onInit() {
     super.onInit();
